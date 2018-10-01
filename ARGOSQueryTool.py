@@ -37,9 +37,31 @@ for lineString in lineStrings:
     obsLat = lineData[5]                # Observation Latitude
     obsLon = lineData[6]                # Observation Longitude
 
-    # Add values to dictionary
-    dateDict[recordID] = obsDateTime
-    locationDict[recordID] = (obsLat, obsLon)
+    #Filter out bad data
+    if obsLC in ("1","2","3"):
 
-#Indicate script is complete
+        # Add values to dictionary
+        dateDict[recordID] = obsDate
+        locationDict[recordID] = (obsLon, obsLat)
+        
 print("Finished")
+
+# Ask for a date
+userDate = input("Enter a date (MM/DD/YYYY)")
+
+# Create empty key list
+keyList = []
+
+# Loop through the date dictionary
+for k, v in dateDict.items():
+    #See if the date matches the user date
+    if v == userDate:
+        keyList.append(k)
+
+# Loop through all key, value pairs in the dateDictionary
+for k in keyList:
+    theDate = dateDict[k]
+    theLocation = locationDict[k]
+    theLat = theLocation[0]
+    theLon = theLocation[1]
+    print("Record {0}: Sara was seen at {1}N-{2}W, on {3}".format(k,theLat,theLon,theDate))
